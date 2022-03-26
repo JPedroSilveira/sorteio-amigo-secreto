@@ -1,5 +1,6 @@
 const AppRoutes = {
   Login: "/",
+  Logout: "/logout",
   Register: "/register",
   MyGroups: "/my-groups",
   EditGroup: "/edit-group",

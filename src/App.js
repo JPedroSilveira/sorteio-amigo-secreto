@@ -9,6 +9,7 @@ import { CreateGroup } from "./views/create-group/create-group";
 import { UserRoute } from "./components/route/user.route";
 import { PublicRoute } from "./components/route/public.route";
 import { AppRoutes } from "./constants/routes.constants";
+import { Logout } from "./views/logout/logout";
 
 function App() {
   return (
@@ -52,6 +53,14 @@ function App() {
             element={
               <PublicRoute>
                 <Register />
+              </PublicRoute>
+            }
+          ></Route>
+          <Route
+            path={AppRoutes.Logout}
+            element={
+              <PublicRoute>
+                <Logout />
               </PublicRoute>
             }
           ></Route>
