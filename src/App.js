@@ -1,23 +1,70 @@
-import logo from './logo.svg';
-import './App.css';
+import "./app.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Login } from "./views/login/login";
+import { Register } from "./views/register";
+import { MyGroups } from "./views/my-groups";
+import { EditGroup } from "./views/edit-group";
+import { ViewGroup } from "./views/view-group";
+import { CreateGroup } from "./views/create-group";
+import { UserRoute } from "./components/route/user.route";
+import { PublicRoute } from "./components/route/public.route";
+import { AppRoutes } from "./constants/routes.constants";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path={AppRoutes.ViewGroup}
+            element={
+              <UserRoute>
+                <ViewGroup />
+              </UserRoute>
+            }
+          ></Route>
+          <Route
+            path={AppRoutes.EditGroup}
+            element={
+              <UserRoute>
+                <EditGroup />
+              </UserRoute>
+            }
+          ></Route>
+          <Route
+            path={AppRoutes.CreateGroup}
+            element={
+              <UserRoute>
+                <CreateGroup />
+              </UserRoute>
+            }
+          ></Route>
+          <Route
+            path={AppRoutes.MyGroups}
+            element={
+              <UserRoute>
+                <MyGroups />
+              </UserRoute>
+            }
+          ></Route>
+          <Route
+            path={AppRoutes.Register}
+            element={
+              <PublicRoute>
+                <Register />
+              </PublicRoute>
+            }
+          ></Route>
+          <Route
+            path={AppRoutes.Login}
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          ></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
