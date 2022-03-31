@@ -1,0 +1,17 @@
+.Text {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.Text p {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
+  color: #000000;
+  text-align: start;
+}

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/button/button";
 import { HSpacer } from "../../components/spacer/spacer";
-import { Title } from "../../components/text/title";
+import { Title } from "../../components/text/title/title";
 import { AppRoutes } from "../../constants/routes.constants";
 import "./my-groups.css";
 
