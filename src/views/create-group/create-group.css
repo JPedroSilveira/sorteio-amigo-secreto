@@ -3,8 +3,30 @@
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-  padding-left: 40px;
-  padding-right: 40px;
   background-color: #e8dfd8;
   height: 100%;
+  width: calc(100% - 32px);
+  padding-left: 16px;
+  padding-right: 16px;
+  overflow-y: auto;
+}
+
+.CreateGroup_Title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-left: 48px;
+}
+
+.CreateGroup form {
+  width: 100%;
+}
+
+.CreateGroup .FormCard {
+  width: calc(100% - 36px);
+  padding-left: 18px;
+  padding-right: 18px;
+  padding-top: 18px;
+  padding-bottom: 18px;
 }

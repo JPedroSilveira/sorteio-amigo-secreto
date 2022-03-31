@@ -1,7 +1,7 @@
 import "./app.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "./views/login/login";
-import { Register } from "./views/register";
+import { Register } from "./views/register/register";
 import { MyGroups } from "./views/my-groups/my-groups";
 import { EditGroup } from "./views/edit-group";
 import { ViewGroup } from "./views/view-group";

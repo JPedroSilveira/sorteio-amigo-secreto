@@ -1,0 +1,16 @@
+.TextBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.TextBar p {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 33px;
+  text-align: center;
+  color: #753e45;
+  margin-left: 16px;
+  margin-right: 16px;
+}
