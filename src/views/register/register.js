@@ -4,6 +4,7 @@ import { Button } from "../../components/button/button";
 import { Input } from "../../components/input/input";
 import { Logo } from "../../components/logo/logo";
 import { HSpacer } from "../../components/spacer/spacer";
+import { Error } from "../../components/text/error/error";
 import { Title } from "../../components/text/title/title";
 import { AppRoutes } from "../../constants/routes.constants";
 import { register } from "../../services/register.service";
@@ -15,25 +16,43 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [registerError, setRegisterError] = useState("");
 
-  function handleRegister() {
-    register(email, password);
-    navigate(AppRoutes.Login);
+  function cleanErrors() {
+    if (registerError) setRegisterError("");
+  }
+
+  function handleRegister(e) {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setRegisterError("Senhas não são iguais");
+    } else {
+      const error = register(name, email, password);
+      if (!error) {
+        navigate(AppRoutes.Login);
+      } else {
+        setRegisterError(error);
+      }
+    }
   }
 
   function handleNameChange(e) {
+    cleanErrors();
     setName(e.target.value);
   }
 
   function handleEmailChange(e) {
+    cleanErrors();
     setEmail(e.target.value);
   }
 
   function handlePasswordChange(e) {
+    cleanErrors();
     setPassword(e.target.value);
   }
 
   function handleConfirmPasswordChange(e) {
+    cleanErrors();
     setConfirmPassword(e.target.value);
   }
 
@@ -76,8 +95,10 @@ function Register() {
           id="confirm-password"
           type="password"
         />
+        <Error>{registerError}</Error>
         <HSpacer height="16px" />
         <Button onClick={handleRegister}>Cadastrar</Button>
+        <HSpacer height="16px" />
       </form>
     </div>
   );

@@ -4,7 +4,7 @@ function TextArea(props) {
   return (
     <div className="TextArea">
       <label htmlFor={props.id}>{props.label}</label>
-      <textarea {...props}>{props.children}</textarea>
+      <textarea {...props} value={props.children} />
     </div>
   );
 }

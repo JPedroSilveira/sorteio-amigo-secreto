@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Bar } from "../../components/bar/bar";
-import { TextBar } from "../../components/bar/text-bar/text";
 import { Button } from "../../components/button/button";
 import { FormCard } from "../../components/card/form/form-card";
 import { Input } from "../../components/input/input";
@@ -10,9 +10,11 @@ import { Subtitle } from "../../components/text/subtitle/subtitle";
 import { Text } from "../../components/text/text";
 import { Title } from "../../components/text/title/title";
 import { isNotEmpty } from "../../utils/obj";
+import { AppRoutes } from "../../constants/routes.constants";
 import "./create-group.css";
 
 function CreateGroup() {
+  const navigate = useNavigate();
   const [groupName, setGroupName] = useState("");
   const [date, setDate] = useState("");
   const [minValue, setMinValue] = useState("");
@@ -34,12 +36,7 @@ function CreateGroup() {
 
   function handleCancelGroup(e) {
     e.preventDefault();
-    // TODO: cancelar amigo secreto
-  }
-
-  function handleChooseFile(e) {
-    e.preventDefault();
-    // TODO: carregar texto por arquivo
+    navigate(AppRoutes.MyGroups);
   }
 
   function handleWishesChange(e) {
@@ -156,7 +153,7 @@ function CreateGroup() {
           ))}
         </FormCard>
         <HSpacer height="4px" />
-        <Text>Lista de desejos</Text>
+        <Text>Presentes</Text>
         <FormCard>
           <TextArea
             id="wishes"
@@ -167,8 +164,6 @@ function CreateGroup() {
           >
             {wishes}
           </TextArea>
-          <TextBar text="OU" />
-          <Button onClick={handleChooseFile}>Escolha um arquivo</Button>
         </FormCard>
         <HSpacer height="0px" />
         <Button onClick={handleCancelGroup}>Cancelar grupo</Button>
