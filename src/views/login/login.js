@@ -12,27 +12,27 @@ import "./login.css";
 
 function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [loginError, setLogginError] = useState("");
+  const [loginError, setLoginError] = useState("");
 
   function handleLogin(e) {
     e.preventDefault();
-    const isLogged = login(email, password);
+    const isLogged = login(phone, password);
     if (!isLogged) {
-      setLogginError("Login inválido!");
+      setLoginError("Login inválido!");
     } else {
       navigate(AppRoutes.MyGroups);
     }
   }
 
-  function handleEmailChange(e) {
-    if (loginError) setLogginError("");
-    setEmail(e.target.value);
+  function handlePhoneChange(e) {
+    if (loginError) setLoginError("");
+    setPhone(e.target.value);
   }
 
   function handlePasswordChange(e) {
-    if (loginError) setLogginError("");
+    if (loginError) setLoginError("");
     setPassword(e.target.value);
   }
 
@@ -45,9 +45,9 @@ function Login() {
       <HSpacer height="16px" />
       <form>
         <Input
-          value={email}
-          onChange={handleEmailChange}
-          label="Email"
+          value={phone}
+          onChange={handlePhoneChange}
+          label="Telefone"
           id="username"
           type="text"
         />

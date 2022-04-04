@@ -4,7 +4,7 @@ import { Login } from "./views/login/login";
 import { Register } from "./views/register/register";
 import { MyGroups } from "./views/my-groups/my-groups";
 import { EditGroup } from "./views/edit-group";
-import { ViewGroup } from "./views/view-group";
+import { ViewGroup } from "./views/view-group/view-group";
 import { CreateGroup } from "./views/create-group/create-group";
 import { UserRoute } from "./components/route/user.route";
 import { PublicRoute } from "./components/route/public.route";

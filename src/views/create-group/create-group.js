@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Bar } from "../../components/bar/bar";
 import { Button } from "../../components/button/button";
-import { FormCard } from "../../components/card/form/form-card";
+import { Card } from "../../components/card/card";
 import { Input } from "../../components/input/input";
 import { HSpacer } from "../../components/spacer/spacer";
 import { TextArea } from "../../components/text-area/text-area";
@@ -12,6 +12,10 @@ import { Title } from "../../components/text/title/title";
 import { isNotEmpty } from "../../utils/obj";
 import { AppRoutes } from "../../constants/routes.constants";
 import "./create-group.css";
+import {
+  create_group,
+  create_group_and_sort,
+} from "../../services/group.service";
 
 function CreateGroup() {
   const navigate = useNavigate();
@@ -26,12 +30,14 @@ function CreateGroup() {
 
   function handleSort(e) {
     e.preventDefault();
-    // TODO: sortear amigo secreto
+    create_group_and_sort(groupName, date, minValue, maxValue, wishes, members);
+    navigate(AppRoutes.MyGroups);
   }
 
   function handleSave(e) {
     e.preventDefault();
-    // TODO: salvar amigo secreto
+    create_group(groupName, date, minValue, maxValue, wishes, members);
+    navigate(AppRoutes.MyGroups);
   }
 
   function handleCancelGroup(e) {
@@ -88,7 +94,7 @@ function CreateGroup() {
       </div>
       <form>
         <Text>Informações gerais</Text>
-        <FormCard>
+        <Card>
           <Input
             value={groupName}
             onChange={handleGroupNameChange}
@@ -121,10 +127,10 @@ function CreateGroup() {
             type="number"
           />
           <HSpacer height="8px" />
-        </FormCard>
+        </Card>
         <HSpacer height="4px" />
         <Text>Participantes</Text>
-        <FormCard>
+        <Card>
           <Input
             value={memberName}
             onChange={handleMemberNameChange}
@@ -146,15 +152,15 @@ function CreateGroup() {
           <Bar />
           <HSpacer height="4px" />
           <Subtitle>Lista de participantes</Subtitle>
-          {members.map((member) => (
-            <Text>
+          {members.map((member, index) => (
+            <Text id={index}>
               {member.name} ({member.phone})
             </Text>
           ))}
-        </FormCard>
+        </Card>
         <HSpacer height="4px" />
         <Text>Presentes</Text>
-        <FormCard>
+        <Card>
           <TextArea
             id="wishes"
             label="Lista de desejos"
@@ -164,7 +170,7 @@ function CreateGroup() {
           >
             {wishes}
           </TextArea>
-        </FormCard>
+        </Card>
         <HSpacer height="0px" />
         <Button onClick={handleCancelGroup}>Cancelar grupo</Button>
         <HSpacer height="2px" />

@@ -22,15 +22,15 @@ function save_login(login) {
   local_storage_set(LOGINS_KEY, logins);
 }
 
-function get_login_by_email(email) {
+function get_login_by_phone(phone) {
   const logins = local_storage_get(LOGINS_KEY);
   if (!logins) return null;
-  return logins.find((login) => login.email === email);
+  return logins.find((login) => login.phone === phone);
 }
 
-function get_current_username() {
+function get_current_user() {
   const login = local_storage_get(CURRENT_LOGIN_KEY);
-  if (login) return login.name;
+  if (login) return login;
   return null;
 }
 
@@ -38,6 +38,6 @@ export {
   save_login,
   add_login,
   remove_login,
-  get_current_username,
-  get_login_by_email,
+  get_current_user,
+  get_login_by_phone,
 };

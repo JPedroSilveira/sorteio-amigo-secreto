@@ -1,0 +1,10 @@
+.Card {
+  display: flex;
+  width: 90%;
+  flex-direction: column;
+  background-color: #e0cfc2;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+}

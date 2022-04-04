@@ -13,7 +13,7 @@ import "./register.css";
 function Register() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [registerError, setRegisterError] = useState("");
@@ -27,7 +27,7 @@ function Register() {
     if (password !== confirmPassword) {
       setRegisterError("Senhas não são iguais");
     } else {
-      const error = register(name, email, password);
+      const error = register(name, phone, password);
       if (!error) {
         navigate(AppRoutes.Login);
       } else {
@@ -41,9 +41,9 @@ function Register() {
     setName(e.target.value);
   }
 
-  function handleEmailChange(e) {
+  function handlePhoneChange(e) {
     cleanErrors();
-    setEmail(e.target.value);
+    setPhone(e.target.value);
   }
 
   function handlePasswordChange(e) {
@@ -73,9 +73,9 @@ function Register() {
         />
         <HSpacer height="8px" />
         <Input
-          value={email}
-          onChange={handleEmailChange}
-          label="Email"
+          value={phone}
+          onChange={handlePhoneChange}
+          label="Telefone"
           id="username"
           type="text"
         />
