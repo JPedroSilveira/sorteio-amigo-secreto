@@ -7,7 +7,7 @@ import { Subtitle } from "../../components/text/subtitle/subtitle";
 import { Text } from "../../components/text/text";
 import { Title } from "../../components/text/title/title";
 import { AppRoutes } from "../../constants/routes.constants";
-import { get_all_groups } from "../../services/group.service";
+import { GroupService } from "../../services/group.service";
 import "./my-groups.css";
 
 function MyGroups() {
@@ -15,7 +15,7 @@ function MyGroups() {
   const [groups, setGroups] = useState();
 
   useEffect(() => {
-    const groups = get_all_groups();
+    const groups = GroupService.get_all_groups();
     setGroups(groups);
   }, []);
 

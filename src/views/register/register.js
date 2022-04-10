@@ -7,7 +7,7 @@ import { HSpacer } from "../../components/spacer/spacer";
 import { Error } from "../../components/text/error/error";
 import { Title } from "../../components/text/title/title";
 import { AppRoutes } from "../../constants/routes.constants";
-import { register } from "../../services/register.service";
+import { RegisterService } from "../../services/register.service";
 import "./register.css";
 
 function Register() {
@@ -27,7 +27,7 @@ function Register() {
     if (password !== confirmPassword) {
       setRegisterError("Senhas não são iguais");
     } else {
-      const error = register(name, phone, password);
+      const error = RegisterService.register(name, phone, password);
       if (!error) {
         navigate(AppRoutes.Login);
       } else {

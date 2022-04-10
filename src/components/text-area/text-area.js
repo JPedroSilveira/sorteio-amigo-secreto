@@ -1,3 +1,4 @@
+import { Error } from "../text/error/error";
 import "./text-area.css";
 
 function TextArea(props) {
@@ -5,6 +6,7 @@ function TextArea(props) {
     <div className="TextArea">
       <label htmlFor={props.id}>{props.label}</label>
       <textarea {...props} value={props.children} />
+      <Error>{props.error}</Error>
     </div>
   );
 }

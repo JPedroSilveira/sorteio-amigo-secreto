@@ -11,11 +11,8 @@ import { Text } from "../../components/text/text";
 import { Title } from "../../components/text/title/title";
 import { isNotEmpty } from "../../utils/obj";
 import { AppRoutes } from "../../constants/routes.constants";
+import { GroupService } from "../../services/group.service";
 import "./create-group.css";
-import {
-  create_group,
-  create_group_and_sort,
-} from "../../services/group.service";
 
 function CreateGroup() {
   const navigate = useNavigate();
@@ -30,13 +27,27 @@ function CreateGroup() {
 
   function handleSort(e) {
     e.preventDefault();
-    create_group_and_sort(groupName, date, minValue, maxValue, wishes, members);
+    GroupService.create_group_and_sort(
+      groupName,
+      date,
+      minValue,
+      maxValue,
+      wishes,
+      members
+    );
     navigate(AppRoutes.MyGroups);
   }
 
   function handleSave(e) {
     e.preventDefault();
-    create_group(groupName, date, minValue, maxValue, wishes, members);
+    GroupService.create_group(
+      groupName,
+      date,
+      minValue,
+      maxValue,
+      wishes,
+      members
+    );
     navigate(AppRoutes.MyGroups);
   }
 

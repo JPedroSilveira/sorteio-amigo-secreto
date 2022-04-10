@@ -7,11 +7,7 @@ import { Subtitle } from "../../components/text/subtitle/subtitle";
 import { Text } from "../../components/text/text";
 import { Title } from "../../components/text/title/title";
 import { AppRoutes } from "../../constants/routes.constants";
-import {
-  get_group,
-  remove_group,
-  sort_group,
-} from "../../services/group.service";
+import { GroupService } from "../../services/group.service";
 import "./view-group.css";
 
 function ViewGroup() {
@@ -21,18 +17,18 @@ function ViewGroup() {
 
   useEffect(() => {
     const id = searchParams.get("id");
-    const group = get_group(id);
+    const group = GroupService.get_group(id);
     setGroup(group);
   }, [searchParams]);
 
   function handleSort() {
-    sort_group(group.id);
-    const updated_group = get_group(group.id);
+    GroupService.sort_group(group.id);
+    const updated_group = GroupService.get_group(group.id);
     setGroup(updated_group);
   }
 
   function handleRemoveGroup() {
-    remove_group(group.id);
+    GroupService.remove_group(group.id);
     navigate(AppRoutes.MyGroups);
   }
 

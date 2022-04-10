@@ -7,7 +7,7 @@ import { HSpacer } from "../../components/spacer/spacer";
 import { Link } from "../../components/text/link/link";
 import { Title } from "../../components/text/title/title";
 import { AppRoutes } from "../../constants/routes.constants";
-import { login } from "../../services/auth.service";
+import { AuthService } from "../../services/auth.service";
 import "./login.css";
 
 function Login() {
@@ -18,7 +18,7 @@ function Login() {
 
   function handleLogin(e) {
     e.preventDefault();
-    const isLogged = login(phone, password);
+    const isLogged = AuthService.login(phone, password);
     if (!isLogged) {
       setLoginError("Login inválido!");
     } else {
