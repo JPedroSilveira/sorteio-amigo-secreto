@@ -4,7 +4,6 @@ const CURRENT_GROUP_KEY = "groups";
 
 function remove_group_by_id(id) {
   let groups = get_groups();
-  console.log(groups);
   groups = groups.filter((group) => group.id !== id);
   local_storage_set(CURRENT_GROUP_KEY, groups);
 }

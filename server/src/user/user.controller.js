@@ -1,11 +1,12 @@
 import HttpStatus from "http-status";
+import { AuthHandler } from "../handler/auth.handler.js";
 import { UserService } from "./user.service.js";
 
 class UserController {
   static async login(req, res) {
-    const body = req.body;
-    if (body && body.phone && body.password) {
-      const token = await UserService.login(body.phone, body.password);
+    const login = req.body;
+    if (UserService.isValidLogin(login)) {
+      const token = await UserService.login(login);
       if (token.isPresent()) {
         res.status(HttpStatus.OK).json({
           key: token.get(),
@@ -19,14 +20,10 @@ class UserController {
   }
 
   static register(req, res) {
-    const body = req.body;
+    const user = req.body;
 
-    if (body && body.name && body.phone && body.password) {
-      const success = UserService.register(
-        body.name,
-        body.phone,
-        body.password
-      );
+    if (UserService.isValidUser(user)) {
+      const success = UserService.register(user);
       if (success) {
         res.status(HttpStatus.CREATED).send();
       } else {
@@ -38,13 +35,9 @@ class UserController {
   }
 
   static async getCurrentUser(req, res) {
-    const jwt = req.header("Authorization");
-    const user = await UserService.getCurrentUser(jwt);
-    if (user.isPresent()) {
-      res.status(HttpStatus.CREATED).json(user.get());
-    } else {
-      res.status(HttpStatus.NOT_FOUND).send();
-    }
+    AuthHandler.get(req, res).onlyIfAuthenticated((user) => {
+      res.status(HttpStatus.OK).json(user);
+    });
   }
 }
 

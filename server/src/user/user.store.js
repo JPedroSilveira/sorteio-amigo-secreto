@@ -1,19 +1,18 @@
 import Optional from "optional-js";
 
-const userTable = new Map();
+const userTable = [];
+const userByPhone = new Map();
 
 class UserStore {
   static findUserByPhone(phone) {
-    const user = userTable.get(phone);
-    return Optional.ofNullable(user);
+    const index = userByPhone.get(phone);
+    return Optional.ofNullable(userTable[index]);
   }
 
-  static save(name, phone, encryptedPassoword) {
-    userTable.set(phone, {
-      name: name,
-      phone: phone,
-      encryptedPassword: encryptedPassoword,
-    });
+  static save(user) {
+    const index = userTable.length;
+    userTable.push(user);
+    userByPhone.set(user.phone, index);
   }
 }
 

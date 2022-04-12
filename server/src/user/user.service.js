@@ -1,9 +1,10 @@
 import sha256 from "crypto-js/sha256.js";
 import * as jose from "jose";
-import { createSecretKey } from "crypto";
 import { promises as fs } from "fs";
 import Optional from "optional-js";
 import { UserStore } from "./user.store.js";
+import { ObjectUtils } from "../utils/object.utils.js";
+import { SecretState } from "../state/secret.state.js";
 
 const APP = "amigo::secreto::server";
 const JWT_ALG = "HS256";
@@ -11,76 +12,96 @@ const ISSUER = `${APP}:issuer`;
 const AUDIENCE = `${APP}:user`;
 
 class UserService {
-  static async login(phone, password) {
-    const user = UserStore.findUserByPhone(phone);
+  static async login(login) {
+    const user = UserStore.findUserByPhone(login.phone);
     if (user.isPresent()) {
-      const isValidLogin = Private.validateLogin(user.get(), password);
+      const isValidLogin = _validateLogin(user.get(), login.password);
       if (isValidLogin) {
-        const token = await Private.createLoginToken(phone);
+        const token = await _createLoginToken(user.get());
         return Optional.of(token);
       }
     }
     return Optional.empty();
   }
 
-  static register(name, phone, password) {
-    const user = UserStore.findUserByPhone(phone);
-    if (user.isPresent()) {
+  static register(user) {
+    const existingUser = UserStore.findUserByPhone(user.phone);
+    if (existingUser.isPresent()) {
       return false;
     }
-    const encryptedPassoword = Private.encryptPassword(password);
-    UserStore.save(name, phone, encryptedPassoword);
+    user.password = _encryptPassword(user.password);
+    UserStore.save(user);
     return true;
   }
 
-  static async getCurrentUser(jwt) {
-    const secretKey = await Private.getSecretKey();
+  static async getUserByAuthentication(jwt) {
+    const payload = await _verifyLoginToken(jwt);
 
-    const { payload } = await jose.jwtVerify(jwt, secretKey, {
-      issuer: ISSUER,
-      audience: AUDIENCE,
-    });
-
-    if (payload) {
-      const phone = payload.sub;
+    if (payload.isPresent()) {
+      const phone = payload.get().sub;
       const user = UserStore.findUserByPhone(phone);
       if (user.isPresent()) {
-        user.get().encryptedPassword = undefined;
+        delete user.get().password;
         return user;
       }
     }
 
     return Optional.empty();
   }
+
+  static isValidLogin(login) {
+    return (
+      ObjectUtils.isNotEmpty(login) &&
+      ObjectUtils.isNotEmpty(login.phone) &&
+      ObjectUtils.isNumber(login.phone) &&
+      ObjectUtils.isNotEmpty(login.password) &&
+      ObjectUtils.isString(login.password)
+    );
+  }
+
+  static isValidUser(user) {
+    return (
+      ObjectUtils.isNotEmpty(user) &&
+      ObjectUtils.isNotEmpty(user.name) &&
+      ObjectUtils.isString(user.name) &&
+      ObjectUtils.isNotEmpty(user.phone) &&
+      ObjectUtils.isNumber(user.phone) &&
+      ObjectUtils.isNotEmpty(user.password) &&
+      ObjectUtils.isString(user.password)
+    );
+  }
 }
 
-class Private {
-  static validateLogin(user, password) {
-    const encryptedPassword = Private.encryptPassword(password);
-    return user.encryptedPassword === encryptedPassword;
-  }
+function _validateLogin(user, password) {
+  const encryptedPassword = _encryptPassword(password);
+  return user.password === encryptedPassword;
+}
 
-  static encryptPassword(password) {
-    return sha256(password).toString();
-  }
+function _encryptPassword(password) {
+  return sha256(password).toString();
+}
 
-  static async createLoginToken(phone) {
-    const secretKey = await Private.getSecretKey();
-    const jwt = await new jose.SignJWT({})
-      .setSubject(phone)
-      .setProtectedHeader({ alg: JWT_ALG })
-      .setIssuedAt()
-      .setIssuer(ISSUER)
-      .setAudience(AUDIENCE)
-      .setExpirationTime("2h")
-      .sign(secretKey);
-    return jwt;
-  }
+async function _createLoginToken(user) {
+  const jwt = await new jose.SignJWT({})
+    .setSubject(user.phone)
+    .setProtectedHeader({ alg: JWT_ALG })
+    .setIssuedAt()
+    .setIssuer(ISSUER)
+    .setAudience(AUDIENCE)
+    .setExpirationTime("2h")
+    .sign(SecretState.userSecret);
+  return jwt;
+}
 
-  static async getSecretKey() {
-    const secretHash = await fs.readFile("./private.key", "utf8");
-    const secretKey = createSecretKey(secretHash, "utf-8");
-    return secretKey;
+async function _verifyLoginToken(jwt) {
+  try {
+    const { payload } = await jose.jwtVerify(jwt, SecretState.userSecret, {
+      issuer: ISSUER,
+      audience: AUDIENCE,
+    });
+    return Optional.ofNullable(payload);
+  } catch (e) {
+    return Optional.empty();
   }
 }
 
