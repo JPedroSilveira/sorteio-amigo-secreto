@@ -26,5 +26,6 @@ Gerencie seu amigo secreto de forma simples e rápida!
 ## Gere uma versão para produção
 
 - Execute: `npm run build`
-- Instale o Host: `cd host && npm install`
-- Hospede a aplicação com Express utilizando: `node host/host.js`
+- Open host directory: `cd host`
+- Instale as dependências: `npm install`
+- Hospede a aplicação com Express utilizando: `node host.js`
