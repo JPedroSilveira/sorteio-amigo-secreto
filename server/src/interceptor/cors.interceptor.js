@@ -3,7 +3,7 @@ import { Objects } from "../utils/objects.utils.js";
 
 class CorsInterceptor {
   static setup(app) {
-    const allowedOrigins = ["https://sorteio-amigo-secreto-app.herokuapp.com/"];
+    const allowedOrigins = ["https://sorteio-amigo-secreto-app.herokuapp.com"];
     app.use(
       cors({
         origin: function (origin, callback) {
