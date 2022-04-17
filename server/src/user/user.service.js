@@ -3,8 +3,9 @@ import * as jose from "jose";
 import { promises as fs } from "fs";
 import Optional from "optional-js";
 import { UserStore } from "./user.store.js";
-import { ObjectUtils } from "../utils/object.utils.js";
+import { Objects } from "../utils/objects.utils.js";
 import { SecretState } from "../state/secret.state.js";
+import { Length } from "../utils/length.utils.js";
 
 const APP = "amigo::secreto::server";
 const JWT_ALG = "HS256";
@@ -18,7 +19,11 @@ class UserService {
       const isValidLogin = _validateLogin(user.get(), login.password);
       if (isValidLogin) {
         const token = await _createLoginToken(user.get());
-        return Optional.of(token);
+        return Optional.of({
+          name: user.get().name,
+          phone: user.get().phone,
+          token: token,
+        });
       }
     }
     return Optional.empty();
@@ -34,7 +39,7 @@ class UserService {
     return true;
   }
 
-  static async getUserByAuthentication(jwt) {
+  static async getUserFromToken(jwt) {
     const payload = await _verifyLoginToken(jwt);
 
     if (payload.isPresent()) {
@@ -51,23 +56,27 @@ class UserService {
 
   static isValidLogin(login) {
     return (
-      ObjectUtils.isNotEmpty(login) &&
-      ObjectUtils.isNotEmpty(login.phone) &&
-      ObjectUtils.isNumber(login.phone) &&
-      ObjectUtils.isNotEmpty(login.password) &&
-      ObjectUtils.isString(login.password)
+      Objects.isNotEmpty(login) &&
+      Objects.isNotEmpty(login.phone) &&
+      Objects.isString(login.phone) &&
+      Length.isEqual(login.phone, 11) &&
+      Objects.isNotEmpty(login.password) &&
+      Objects.isString(login.password) &&
+      Length.isGreaterOrEqual(login.password, 8)
     );
   }
 
   static isValidUser(user) {
     return (
-      ObjectUtils.isNotEmpty(user) &&
-      ObjectUtils.isNotEmpty(user.name) &&
-      ObjectUtils.isString(user.name) &&
-      ObjectUtils.isNotEmpty(user.phone) &&
-      ObjectUtils.isNumber(user.phone) &&
-      ObjectUtils.isNotEmpty(user.password) &&
-      ObjectUtils.isString(user.password)
+      Objects.isNotEmpty(user) &&
+      Objects.isNotEmpty(user.name) &&
+      Objects.isString(user.name) &&
+      Objects.isNotEmpty(user.phone) &&
+      Objects.isString(user.phone) &&
+      Length.isEqual(user.phone, 11) &&
+      Objects.isNotEmpty(user.password) &&
+      Objects.isString(user.password) &&
+      Length.isGreaterOrEqual(user.password, 8)
     );
   }
 }

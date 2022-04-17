@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/button/button";
 import { Input } from "../../components/input/input";
@@ -7,19 +7,23 @@ import { HSpacer } from "../../components/spacer/spacer";
 import { Link } from "../../components/text/link/link";
 import { Title } from "../../components/text/title/title";
 import { AppRoutes } from "../../constants/routes.constants";
+import { LoaderContext } from "../../context/loader/loader.context";
 import { AuthService } from "../../services/auth.service";
 import "./login.css";
 
 function Login() {
   const navigate = useNavigate();
+  const { executeWithLoading } = useContext(LoaderContext);
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
 
-  function handleLogin(e) {
+  async function handleLogin(e) {
     e.preventDefault();
-    const isLogged = AuthService.login(phone, password);
-    if (!isLogged) {
+    const success = await executeWithLoading(
+      AuthService.login(phone, password)
+    );
+    if (!success) {
       setLoginError("Login inválido!");
     } else {
       navigate(AppRoutes.MyGroups);

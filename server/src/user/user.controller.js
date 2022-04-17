@@ -6,11 +6,9 @@ class UserController {
   static async login(req, res) {
     const login = req.body;
     if (UserService.isValidLogin(login)) {
-      const token = await UserService.login(login);
-      if (token.isPresent()) {
-        res.status(HttpStatus.OK).json({
-          key: token.get(),
-        });
+      const userLogin = await UserService.login(login);
+      if (userLogin.isPresent()) {
+        res.status(HttpStatus.OK).json(userLogin.get());
       } else {
         res.status(HttpStatus.NOT_FOUND).send();
       }

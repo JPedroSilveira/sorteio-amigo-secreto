@@ -1,12 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./app";
+import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { AxiosInterceptor } from "./interceptors/axios.interceptor";
+import { LoaderContextProvider } from "./context/loader/loader.context";
+import { DialogContextProvider } from "./context/dialog/dialog.context";
 import "./index.css";
+
+AxiosInterceptor.setup();
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <LoaderContextProvider>
+      <DialogContextProvider>
+        <App />
+      </DialogContextProvider>
+    </LoaderContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

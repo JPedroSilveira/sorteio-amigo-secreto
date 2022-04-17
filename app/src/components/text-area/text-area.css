@@ -21,3 +21,7 @@
   font-size: 18px;
   resize: none;
 }
+
+.TextArea textarea:disabled {
+  color: black;
+}

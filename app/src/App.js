@@ -1,4 +1,3 @@
-import "./app.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "./views/login/login";
 import { Register } from "./views/register/register";
@@ -10,20 +9,13 @@ import { UserRoute } from "./components/route/user.route";
 import { PublicRoute } from "./components/route/public.route";
 import { AppRoutes } from "./constants/routes.constants";
 import { Logout } from "./views/logout/logout";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route
-            path={AppRoutes.ViewGroup}
-            element={
-              <UserRoute>
-                <ViewGroup />
-              </UserRoute>
-            }
-          ></Route>
           <Route
             path={AppRoutes.EditGroup}
             element={
@@ -45,6 +37,14 @@ function App() {
             element={
               <UserRoute>
                 <MyGroups />
+              </UserRoute>
+            }
+          ></Route>
+          <Route
+            path={AppRoutes.ViewGroup}
+            element={
+              <UserRoute>
+                <ViewGroup />
               </UserRoute>
             }
           ></Route>

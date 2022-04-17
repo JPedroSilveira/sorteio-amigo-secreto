@@ -1,4 +1,4 @@
-class ObjectUtils {
+class Objects {
   static isEmpty(obj) {
     return obj === undefined || obj === null || obj === "" || obj.length === 0;
   }
@@ -11,6 +11,12 @@ class ObjectUtils {
   static isString(obj) {
     return typeof obj === "string";
   }
+  static isEqual(obj1, obj2) {
+    return obj1 === obj2;
+  }
+  static isNotEqual(obj1, obj2) {
+    return !this.isEqual(obj1, obj2);
+  }
 }
 
-export { ObjectUtils };
+export { Objects };

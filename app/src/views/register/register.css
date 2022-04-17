@@ -7,6 +7,7 @@
   padding-right: 40px;
   background-color: #e8dfd8;
   height: 100%;
+  overflow: auto;
 }
 
 .Register form {

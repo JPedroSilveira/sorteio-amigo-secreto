@@ -1,0 +1,15 @@
+.EditMembers {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 5%;
+}
+
+.EditMembers .MemberList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-y: auto;
+}

@@ -1,11 +1,11 @@
 {
-  "name": "server",
+  "name": "sorteio-amigo-secreto-api",
   "version": "1.0.0",
-  "description": "Data Server",
+  "private": true,
+  "description": "API do Sorteio Amigo Secreto",
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "author": "",

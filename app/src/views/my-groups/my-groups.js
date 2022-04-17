@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/button/button";
 import { Card } from "../../components/card/card";
@@ -7,16 +7,28 @@ import { Subtitle } from "../../components/text/subtitle/subtitle";
 import { Text } from "../../components/text/text";
 import { Title } from "../../components/text/title/title";
 import { AppRoutes } from "../../constants/routes.constants";
+import { LoaderContext } from "../../context/loader/loader.context";
 import { GroupService } from "../../services/group.service";
 import "./my-groups.css";
 
 function MyGroups() {
   const navigate = useNavigate();
-  const [groups, setGroups] = useState();
+  const { executeWithLoading } = useContext(LoaderContext);
+  const [groups, setGroups] = useState(null);
 
   useEffect(() => {
-    const groups = GroupService.get_all_groups();
-    setGroups(groups);
+    let updateGroups = (groups) => {
+      setGroups(groups);
+    };
+    async function fetchData() {
+      const groups = await executeWithLoading(GroupService.getAll());
+      updateGroups(groups);
+    }
+    fetchData();
+
+    return () => {
+      updateGroups = () => {};
+    };
   }, []);
 
   function handleOnCreateGroup() {
@@ -37,7 +49,7 @@ function MyGroups() {
       <Title>Seus grupos</Title>
       {groups &&
         groups.map((group, index) => (
-          <div id={index}>
+          <div key={index}>
             <Card>
               <Subtitle>{group.name}</Subtitle>
               <Text>{group.members.length} participantes</Text>

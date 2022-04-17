@@ -7,7 +7,10 @@ class GroupRouter {
     app.post(`${root}`, GroupController.create);
     app.put(`${root}`, GroupController.update);
     app.delete(`${root}`, GroupController.delete);
-    app.get(`${root}`, GroupController.getGroups);
+    app.get(`${root}`, GroupController.get);
+    app.get(`${root}/all`, GroupController.getAll);
+    app.put(`${root}/sort`, GroupController.sort);
+    app.put(`${root}/wishes`, GroupController.saveWishes);
   }
 }
 

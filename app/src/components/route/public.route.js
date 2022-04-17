@@ -7,7 +7,7 @@ function PublicRoute(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (AuthService.is_logged_in()) {
+    if (AuthService.isLoggedIn()) {
       navigate(AppRoutes.MyGroups);
     }
   }, [navigate]);
