@@ -26,3 +26,4 @@ Gerencie seu amigo secreto de forma simples e rápida!
 ## Gere uma versão para produção
 
 - Execute: `npm run build`
+- Hospede a aplicação com Express utilizando: `node host.js`
