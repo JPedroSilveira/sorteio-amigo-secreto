@@ -6,6 +6,10 @@ RUN npm ci --silent
 RUN npm run build
 
 FROM nginx:stable-alpine
-COPY --from=build /app/build /usr/share/nginx/html
-COPY host.js ./
-CMD [ "node", "host.js" ]
+WORKDIR /app
+COPY --from=build /app/build ./build
+WORKDIR /app/host
+COPY host ./
+RUN npm ci --silent
+WORKDIR /app
+CMD [ "node", "host/host.js" ]
