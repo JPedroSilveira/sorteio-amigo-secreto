@@ -1,4 +1,4 @@
-name: ci
+name: App Image Deploy
 
 on:
   push:
