@@ -66,21 +66,15 @@ function EditInfo(props) {
   function handleMinValueChange(e) {
     errors.minValue = "";
     updateErrors();
-    const newValue = Strings.parseMoneyToNumber(e.target.value);
-    if (Objects.isNotEmpty(newValue)) {
-      setMinValue(Strings.parseNumberToString(newValue));
-      updateGroup();
-    }
+    setMinValue(e.target.value);
+    updateGroup();
   }
 
   function handleMaxValueChange(e) {
     errors.maxValue = "";
     updateErrors();
-    const newValue = Strings.parseMoneyToNumber(e.target.value);
-    if (Objects.isNotEmpty(newValue)) {
-      setMaxValue(Strings.parseNumberToString(newValue));
-      updateGroup();
-    }
+    setMaxValue(e.target.value);
+    updateGroup();
   }
 
   return (
@@ -106,7 +100,7 @@ function EditInfo(props) {
       <Input
         value={minValue}
         onChange={handleMinValueChange}
-        label="Valor mínimo (Ex.: 5,00)"
+        label="Valor mínimo (Ex.: 5.00)"
         id="min-value"
         type="number"
         error={errors.minValue}
@@ -115,7 +109,7 @@ function EditInfo(props) {
       <Input
         value={maxValue}
         onChange={handleMaxValueChange}
-        label="Valor máximo (Ex.: 25,00)"
+        label="Valor máximo (Ex.: 25.00)"
         id="max-value"
         type="number"
         error={errors.maxValue}

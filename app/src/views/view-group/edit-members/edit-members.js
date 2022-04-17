@@ -13,6 +13,7 @@ import { LoaderContext } from "../../../context/loader/loader.context";
 import { Error } from "../../../components/text/error/error";
 import { AuthService } from "../../../services/auth.service";
 import "./edit-members.css";
+import { Strings } from "../../../utils/string.utils";
 
 function EditMembers(props) {
   const { executeWithLoading } = useContext(LoaderContext);
@@ -59,14 +60,11 @@ function EditMembers(props) {
     e.preventDefault();
     const member = {
       name: memberName,
-      phone: memberPhone,
+      phone: Strings.removeNonNumericCharacters(memberPhone),
     };
     const errors = GroupService.isValidMember(member, group.members);
     if (Objects.isEmpty(errors)) {
-      group.members.push({
-        name: memberName,
-        phone: memberPhone,
-      });
+      group.members.push(member);
       updateGroup();
       cleanMemberFields();
     } else {

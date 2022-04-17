@@ -100,14 +100,11 @@ function CreateGroup() {
     e.preventDefault();
     const member = {
       name: memberName,
-      phone: memberPhone,
+      phone: Strings.removeNonNumericCharacters(memberPhone),
     };
     const errors = GroupService.isValidMember(member, members);
     if (Objects.isEmpty(errors)) {
-      members.push({
-        name: memberName,
-        phone: memberPhone,
-      });
+      members.push(member);
       setMembers([...members]);
       cleanMemberFields();
     } else {
@@ -151,19 +148,13 @@ function CreateGroup() {
   function handleMinValueChange(e) {
     errors.minValue = "";
     updateErrors();
-    const newValue = Strings.parseMoneyToNumber(e.target.value);
-    if (Objects.isNotEmpty(newValue)) {
-      setMinValue(Strings.parseNumberToString(newValue));
-    }
+    setMinValue(e.target.value);
   }
 
   function handleMaxValueChange(e) {
     errors.maxValue = "";
     updateErrors();
-    const newValue = Strings.parseMoneyToNumber(e.target.value);
-    if (Objects.isNotEmpty(newValue)) {
-      setMaxValue(Strings.parseNumberToString(newValue));
-    }
+    setMaxValue(e.target.value);
   }
 
   return (
@@ -196,16 +187,17 @@ function CreateGroup() {
           <Input
             value={minValue}
             onChange={handleMinValueChange}
-            label="Valor mínimo (Ex.: 5,00)"
+            label="Valor mínimo (Ex.: 5.00)"
             id="min-value"
             type="number"
+            min="10"
             error={errors.minValue}
           />
           <HSpacer height="16px" />
           <Input
             value={maxValue}
             onChange={handleMaxValueChange}
-            label="Valor máximo (Ex.: 25,00)"
+            label="Valor máximo (Ex.: 25.00)"
             id="max-value"
             type="number"
             error={errors.maxValue}

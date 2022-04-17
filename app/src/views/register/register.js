@@ -10,6 +10,7 @@ import { AuthService } from "../../services/auth.service";
 import { Objects } from "../../utils/object.utils";
 import { LoaderContext } from "../../context/loader/loader.context";
 import { Error } from "../../components/text/error/error";
+import { Strings } from "../../utils/string.utils";
 import "./register.css";
 
 function Register() {
@@ -24,9 +25,10 @@ function Register() {
 
   async function handleRegister(e) {
     e.preventDefault();
+    const numericPhone = Strings.removeNonNumericCharacters(phone);
     const errors = AuthService.isValidUser(
       name,
-      phone,
+      numericPhone,
       password,
       confirmPassword
     );
@@ -34,7 +36,7 @@ function Register() {
       setErrors(errors);
     } else {
       const error = await executeWithLoading(
-        AuthService.register(name, phone, password)
+        AuthService.register(name, numericPhone, password)
       );
       if (Objects.isEmpty(error)) {
         navigate(AppRoutes.Login);

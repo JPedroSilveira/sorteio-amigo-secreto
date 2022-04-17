@@ -9,6 +9,7 @@ import { Title } from "../../components/text/title/title";
 import { AppRoutes } from "../../constants/routes.constants";
 import { LoaderContext } from "../../context/loader/loader.context";
 import { AuthService } from "../../services/auth.service";
+import { Strings } from "../../utils/string.utils";
 import "./login.css";
 
 function Login() {
@@ -21,7 +22,7 @@ function Login() {
   async function handleLogin(e) {
     e.preventDefault();
     const success = await executeWithLoading(
-      AuthService.login(phone, password)
+      AuthService.login(Strings.removeNonNumericCharacters(phone), password)
     );
     if (!success) {
       setLoginError("Login inválido!");
