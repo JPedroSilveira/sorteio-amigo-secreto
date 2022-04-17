@@ -4,15 +4,8 @@ import { Objects } from "../utils/object.utils";
 import { Length } from "../utils/length.utils";
 
 class GroupService {
-  static async createAndSort(name, date, minValue, maxValue, wishes, members) {
-    const idOrError = await this.create(
-      name,
-      date,
-      minValue,
-      maxValue,
-      wishes,
-      members
-    );
+  static async createAndSort(group) {
+    const idOrError = await this.create(group);
     if (Objects.isNumber(idOrError)) {
       await this.sort(idOrError);
     } else {
