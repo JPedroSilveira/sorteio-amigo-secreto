@@ -5,7 +5,7 @@ COPY . ./
 RUN npm ci --silent
 RUN npm run build
 
-FROM nginx:stable-alpine
+FROM node:alpine3.14
 WORKDIR /app
 COPY --from=build /app/build ./build
 WORKDIR /app/host
