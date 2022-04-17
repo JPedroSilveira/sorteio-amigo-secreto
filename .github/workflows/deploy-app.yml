@@ -10,10 +10,6 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Open app
-        run: cd app
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -26,5 +22,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
+          context: ./app
           push: true
           tags: jpedross1999/amigo-secreto-app:latest
