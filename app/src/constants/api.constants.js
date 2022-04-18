@@ -1,4 +1,4 @@
-const BaseUrl = "http://localhost:3001";
+const BaseUrl = "https://amigo-secreto-server.herokuapp.com";
 const BaseUser = `${BaseUrl}/user`;
 const BaseGroup = `${BaseUrl}/group`;
 
