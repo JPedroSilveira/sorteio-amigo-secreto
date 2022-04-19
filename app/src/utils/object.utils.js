@@ -2,6 +2,12 @@ class Objects {
   static isNull(obj) {
     return obj === null;
   }
+  static isUndefined(obj) {
+    return obj === undefined;
+  }
+  static isNotUndefined(obj) {
+    return !this.isUndefined(obj);
+  }
   static isEmpty(obj) {
     return (
       obj === undefined ||

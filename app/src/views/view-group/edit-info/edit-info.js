@@ -31,6 +31,11 @@ function EditInfo(props) {
     setErrors({ ...errors });
   }
 
+  function handleCancel(e) {
+    e.preventDefault();
+    hide();
+  }
+
   async function handleSave(e) {
     e.preventDefault();
 
@@ -86,6 +91,7 @@ function EditInfo(props) {
         id="group-name"
         type="text"
         error={errors.name}
+        required
       />
       <HSpacer height="16px" />
       <Input
@@ -95,6 +101,7 @@ function EditInfo(props) {
         id="date"
         type="date"
         error={errors.date}
+        required
       />
       <HSpacer height="16px" />
       <Input
@@ -104,6 +111,7 @@ function EditInfo(props) {
         id="min-value"
         type="number"
         error={errors.minValue}
+        required
       />
       <HSpacer height="16px" />
       <Input
@@ -113,8 +121,10 @@ function EditInfo(props) {
         id="max-value"
         type="number"
         error={errors.maxValue}
+        required
       />
-      <HSpacer height="8px" />
+      <HSpacer height="16px" />
+      <Button onClick={handleCancel}>Cancelar</Button>
       <HSpacer height="8px" />
       <Button onClick={handleSave}>Salvar Alterações</Button>
       <Error center>{error}</Error>

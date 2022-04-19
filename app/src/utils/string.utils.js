@@ -11,6 +11,10 @@ class Strings {
     }
     const filteredStr = str.replace(/^0+/, "").replace("-", "");
 
+    if (Objects.isEmpty(filteredStr)) {
+      return 0;
+    }
+
     const floatValue = parseFloat(filteredStr);
     if (isNaN(floatValue)) {
       return null;

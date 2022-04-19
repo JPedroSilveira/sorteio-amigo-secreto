@@ -9,6 +9,7 @@
   padding-left: 16px;
   padding-right: 16px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .CreateGroup_Title {

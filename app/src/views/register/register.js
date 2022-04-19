@@ -90,6 +90,7 @@ function Register() {
           id="name"
           type="text"
           error={errors.name}
+          required
         />
         <HSpacer height="8px" />
         <Input
@@ -99,6 +100,7 @@ function Register() {
           id="username"
           type="text"
           error={errors.phone}
+          required
         />
         <HSpacer height="8px" />
         <Input
@@ -108,6 +110,7 @@ function Register() {
           id="password"
           type="password"
           error={errors.password}
+          required
         />
         <HSpacer height="8px" />
         <Input
@@ -117,6 +120,7 @@ function Register() {
           id="confirm-password"
           type="password"
           error={errors.confirmPassword}
+          required
         />
         <HSpacer height="16px" />
         <Button onClick={handleRegister}>Cadastrar</Button>

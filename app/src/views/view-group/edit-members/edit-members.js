@@ -82,6 +82,11 @@ function EditMembers(props) {
     }
   }
 
+  function handleCancel(e) {
+    e.preventDefault();
+    hide();
+  }
+
   return (
     <div className="EditMembers">
       <Input
@@ -91,6 +96,7 @@ function EditMembers(props) {
         id="member-name"
         type="text"
         error={errors.memberName}
+        required
       />
       <HSpacer height="16px" />
       <Input
@@ -100,6 +106,7 @@ function EditMembers(props) {
         id="member-phone"
         type="tel"
         error={errors.memberPhone}
+        required
       />
       <HSpacer height="16px" />
       <Button onClick={handleAddMember}>Adicionar participante</Button>
@@ -117,9 +124,11 @@ function EditMembers(props) {
           </ListItem>
         ))}
       </div>
+      <Error center>{error}</Error>
+      <HSpacer height="16px" />
+      <Button onClick={handleCancel}>Cancelar</Button>
       <HSpacer height="8px" />
       <Button onClick={handleSave}>Salvar Alterações</Button>
-      <Error center>{error}</Error>
       <HSpacer height="16px" />
     </div>
   );

@@ -18,8 +18,8 @@ import { EditMembers } from "./edit-members/edit-members";
 import { EditInfo } from "./edit-info/edit-info";
 import { LoaderContext } from "../../context/loader/loader.context";
 import { AuthService } from "../../services/auth.service";
-import "./view-group.css";
 import { TextArea } from "../../components/text-area/text-area";
+import "./view-group.css";
 
 function ViewGroup() {
   const navigate = useNavigate();
@@ -172,6 +172,8 @@ function ViewGroup() {
                   <Subtitle>
                     Seu amigo secreto é: {group.secretFriend.name}
                   </Subtitle>
+                  <Text>Telefone: {group.secretFriend.phone}</Text>
+                  <HSpacer height="8px" />
                   {group.secretFriend.wishes && (
                     <>
                       <TextArea

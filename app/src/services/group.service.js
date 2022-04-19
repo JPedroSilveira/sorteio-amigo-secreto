@@ -114,6 +114,9 @@ class GroupService {
     if (Objects.isEmpty(group.maxValue)) {
       errors.maxValue = "Necessário definir um valor máximo";
     }
+    if (group.maxValue <= 0) {
+      errors.maxValue = "Valor máximo deve ser maior que zero";
+    }
 
     if (isNaN(group.minValue)) {
       errors.minValue = "Valor mínimo deve ser um número válido";

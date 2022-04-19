@@ -25,8 +25,8 @@ function CreateGroup() {
   const [user] = useState(AuthService.getUser());
   const [groupName, setGroupName] = useState("");
   const [date, setDate] = useState("");
-  const [minValue, setMinValue] = useState(0.0);
-  const [maxValue, setMaxValue] = useState(0.0);
+  const [minValue, setMinValue] = useState("0");
+  const [maxValue, setMaxValue] = useState("0");
   const [memberName, setMemberName] = useState("");
   const [memberPhone, setMemberPhone] = useState("");
   const [wishes, setWishes] = useState("");
@@ -41,6 +41,10 @@ function CreateGroup() {
   function cleanMemberFields() {
     setMemberName("");
     setMemberPhone("");
+    if (members.length >= 3) {
+      errors.members = "";
+      updateErrors();
+    }
   }
 
   function createGroupFromState() {
@@ -173,6 +177,7 @@ function CreateGroup() {
             id="group-name"
             type="text"
             error={errors.name}
+            required
           />
           <HSpacer height="16px" />
           <Input
@@ -182,6 +187,7 @@ function CreateGroup() {
             id="date"
             type="date"
             error={errors.date}
+            required
           />
           <HSpacer height="16px" />
           <Input
@@ -192,6 +198,7 @@ function CreateGroup() {
             type="number"
             min="10"
             error={errors.minValue}
+            required
           />
           <HSpacer height="16px" />
           <Input
@@ -201,11 +208,12 @@ function CreateGroup() {
             id="max-value"
             type="number"
             error={errors.maxValue}
+            required
           />
           <HSpacer height="8px" />
         </Card>
         <HSpacer height="4px" />
-        <Text>Participantes</Text>
+        <Text>Participantes (Mínimo 3)</Text>
         <Card>
           <Input
             value={memberName}
@@ -214,6 +222,7 @@ function CreateGroup() {
             id="member-name"
             type="text"
             error={errors.memberName}
+            required
           />
           <HSpacer height="16px" />
           <Input
@@ -223,6 +232,7 @@ function CreateGroup() {
             id="member-phone"
             type="tel"
             error={errors.memberPhone}
+            required
           />
           <HSpacer height="16px" />
           <Button onClick={handleAddMember}>Adicionar participante</Button>
@@ -269,9 +279,7 @@ function CreateGroup() {
         <Button onClick={handleSort}>Sortear amigo secreto</Button>
         <Error center>{error}</Error>
         <Error center>
-          {Objects.isDeeplyNotEmpty(errors)
-            ? "Erros encontrados nos campos acima"
-            : ""}
+          {Objects.isDeeplyNotEmpty(errors) && "Verifique os campos novamente"}
         </Error>
         <HSpacer height="8px" />
       </form>
